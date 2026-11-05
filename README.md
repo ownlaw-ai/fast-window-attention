@@ -21,3 +21,4 @@ from fast_attention import FastWindowAttention
 model = FastWindowAttention(hidden_size=768)
 x = torch.randn(1, 128000, 768)
 out, _ = model(x)
+Contact me: telegram [@TGVlP1]
