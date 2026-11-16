@@ -1,24 +1,32 @@
-FastWindowAttention
-57x faster than SDPA on 128k tokens. No OOM. Scales to arbitrary context lengths.
+markdown
+# FastWindowAttention
 
-Что это?
-FastWindowAttention — это оптимизированная реализация Sliding Window Attention с attention sinks. Она позволяет обрабатывать последовательности неограниченной длины (теоретически до бесконечности) на потребительских GPU (Tesla T4), в то время как стандартный nn.MultiheadAttention падает с ошибкой Out of Memory (OOM) уже на 32k токенах.
+**57x faster than SDPA on 128k tokens. No OOM. Scales to arbitrary context lengths.**
 
-Код написан на PyTorch и использует F.scaled_dot_product_attention для максимальной скорости.
+## Что это?
 
-Benchmarks (Tesla T4)
-Sequence Length	SDPA Time	FastWindow Time	Speedup
-32k tokens	0.23s	0.03s	7.8x
-64k tokens	0.73s	0.03s	27x
-128k tokens	2.76s	0.05s	55x
-200k tokens	7.54s	0.13s	57x
-Примечание: Стандартный SDPA (Scaled Dot Product Attention) не может обработать 128k+ токенов на T4 из-за нехватки памяти. FastWindowAttention справляется.
+**FastWindowAttention** — это оптимизированная реализация Sliding Window Attention с **attention sinks**. Она позволяет обрабатывать последовательности **неограниченной длины** (теоретически до бесконечности) на потребительских GPU (Tesla T4), в то время как стандартный `nn.MultiheadAttention` падает с ошибкой Out of Memory (OOM) уже на 32k токенах.
 
-Установка
-Скопируйте fast_attention.py в свой проект.
+Код написан на PyTorch и использует `F.scaled_dot_product_attention` для максимальной скорости.
 
-Использование
-python
+## Benchmarks (Tesla T4)
+
+| Sequence Length | SDPA Time | FastWindow Time | Speedup |
+| :--- | :--- | :--- | :--- |
+| 32k tokens | 0.23s | 0.03s | **7.8x** |
+| 64k tokens | 0.73s | 0.03s | **27x** |
+| 128k tokens | 2.76s | 0.05s | **55x** |
+| 200k tokens | 7.54s | 0.13s | **57x** |
+
+> **Примечание:** Стандартный `SDPA` (Scaled Dot Product Attention) не может обработать 128k+ токенов на T4 из-за нехватки памяти. FastWindowAttention справляется.
+
+## Установка
+
+Скопируйте `fast_attention.py` в свой проект.
+
+## Использование
+
+```python
 import torch
 from fast_attention import FastWindowAttention
 
